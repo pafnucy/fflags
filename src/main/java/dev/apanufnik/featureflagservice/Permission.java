@@ -1,6 +1,7 @@
 package dev.apanufnik.featureflagservice;
 
 
+import lombok.Builder;
 import lombok.Value;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Document("permission")
 @Value
+@Builder
 class Permission {
 
     @Id

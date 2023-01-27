@@ -5,3 +5,8 @@ Provides access tokens to given functionalities to users, which can be used agai
 Sets of permissions are managed here by admin users.
 
 Motivation: while feature flags are usually property-managed per service or in a static way for whole application, this per-user and per-feature approach made me think of some permission application. It is stateful (stored permissions), but allows for using permissions without calling Feature Flag Service every time a feature is used on different backend. 
+
+
+## Developer mode
+
+Running application `dev` profile uses different database name, clears all permission and user data, adds few records. 
