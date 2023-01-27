@@ -50,4 +50,13 @@ class FeatureRetrievalSecurityTest {
                 .andExpect(MockMvcResultMatchers.header().string("X-feature-permissions", TestData.userToken()));
     }
 
+
+    @Test
+    void versionEndpointIsAccessibleTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/version"))
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.status().is(200));
+    }
+
 }
