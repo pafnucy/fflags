@@ -19,15 +19,25 @@ class FeaturePermissionController {
 
     PermissionRepository permissionRepository;
 
+    TokenFacade tokenFacade;
+
 
     @GetMapping
     ResponseEntity<PermissionDto> get(Authentication authentication) {
 
-        var permissionOptional = permissionRepository
-                .findByUsername(((User) authentication.getPrincipal()).getUsername());
+        var username = ((User) authentication.getPrincipal()).getUsername();
+
+        var permissionOptional = permissionRepository.findByUsername(username);
 
         return permissionOptional
-                .map(permission -> ResponseEntity.ok(permission.toDto()))
-                .orElseGet(() -> ResponseEntity.status(200).body(PermissionDto.empty()));
+                .map(permission -> ResponseEntity
+                        .status(200)
+                        .header(
+                                "X-feature-permissions",
+                                tokenFacade.createFeatureFlagPermissionToken(username, permission.getFeaturePermissions()))
+                        .body(permission.toDto()))
+                .orElseGet(() -> ResponseEntity
+                        .status(200)
+                        .body(PermissionDto.empty()));
     }
 }
