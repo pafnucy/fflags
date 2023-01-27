@@ -10,7 +10,7 @@ public class TestData {
 
 
     public static String userToken() {
-        return "Bearer: user-1,read-history,add-products";  // TODO use properly encoded token
+        return "Bearer user-1,read-history,add-products";  // TODO use properly encoded token
     }
 
 }
