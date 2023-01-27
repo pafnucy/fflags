@@ -1,33 +1,7 @@
-# Getting Started
+# Feature Flag Service
 
-### Reference Documentation
+Provides access tokens to given functionalities to users, which can be used against other backends. 
 
-For further reference, please consider the following sections:
+Sets of permissions are managed here by admin users.
 
-* [Official Gradle documentation](https://docs.gradle.org)
-* [Spring Boot Gradle Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.7.8/gradle-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/2.7.8/gradle-plugin/reference/html/#build-image)
-* [Spring Cloud Sleuth Reference Guide](https://docs.spring.io/spring-cloud-sleuth/docs/current/reference/htmlsingle/spring-cloud-sleuth.html)
-* [Embedded MongoDB Database](https://docs.spring.io/spring-boot/docs/2.7.8/reference/htmlsingle/#data.nosql.mongodb.embedded)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/2.7.8/reference/htmlsingle/#web)
-* [Spring Data MongoDB](https://docs.spring.io/spring-boot/docs/2.7.8/reference/htmlsingle/#data.nosql.mongodb)
-* [Spring Security](https://docs.spring.io/spring-boot/docs/2.7.8/reference/htmlsingle/#web.security)
-
-### Guides
-
-The following guides illustrate how to use some features concretely:
-
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
-* [Accessing Data with MongoDB](https://spring.io/guides/gs/accessing-data-mongodb/)
-* [Securing a Web Application](https://spring.io/guides/gs/securing-web/)
-* [Spring Boot and OAuth2](https://spring.io/guides/tutorials/spring-boot-oauth2/)
-* [Authenticating a User with LDAP](https://spring.io/guides/gs/authenticating-ldap/)
-
-### Additional Links
-
-These additional references should also help you:
-
-* [Gradle Build Scans – insights for your project's build](https://scans.gradle.com#gradle)
-
+Motivation: while feature flags are usually property-managed per service or in a static way for whole application, this per-user and per-feature approach made me think of some permission application. It is stateful (stored permissions), but allows for using permissions without calling Feature Flag Service every time a feature is used on different backend. 
