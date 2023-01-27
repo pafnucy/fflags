@@ -28,7 +28,6 @@ class FeatureRetrievalSecurityTest {
     PermissionRepository permissionRepository;
 
 
-
     @Test
     void notAuthenticatedUserCannotAccessPermissionsTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
@@ -39,7 +38,7 @@ class FeatureRetrievalSecurityTest {
     }
 
     @Test
-    @WithMockUser(username = "user-1", password = "pwd", authorities = {"user"})
+    @WithMockUser(username = "user-1", password = "pwd", authorities = {"ROLE_USER"})
     void authenticatedUserGetsPermissionsAsJsonAndTokenTest() throws Exception {
 
         permissionRepository.save(Permission.builder()
@@ -70,6 +69,44 @@ class FeatureRetrievalSecurityTest {
                         .get("/version"))
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().is(200));
+    }
+
+
+    @Test
+    @WithMockUser(username = "user-1", password = "pwd", authorities = {"ROLE_USER"})
+    void nonAdminUserCannotAddPermission() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/v1/features")
+                        .header(HttpHeaders.AUTHORIZATION, "Basic dXNlci0xOntub29wfXB3ZAo=")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "username": "user-b",
+                                "permissions": ["read-history"]
+                                }
+                                """))
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.status().is(403));
+    }
+
+    @Test
+    @WithMockUser(username = "user-1", password = "pwd", authorities = {"ROLE_ADMIN"})
+    void adminUserCanAddPermission() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/v1/features")
+                        .header(HttpHeaders.AUTHORIZATION, "Basic dXNlci0xOntub29wfXB3ZAo=")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "username": "user-b",
+                                "permissions": ["read-history"]
+                                }
+                                """))
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.header().exists("Location"))
+                .andExpect(MockMvcResultMatchers.status().is(201));
     }
 
 }
